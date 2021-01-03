@@ -39,11 +39,28 @@ $routes->get('/logout', 'Auth::logout');
 
 // Admin Routes
 $routes->get('/admin', 'Admin\Dashboard::index',['filter'=>'auth']);
+
+// Servis Route
 $routes->get('/admin/servis', 'Admin\Servis::index', ['filter'=>'auth']);
 $routes->post('/admin/servis/create', 'Admin\Servis::create', ['filter'=>'auth']);
 $routes->post('/admin/servis/update/$1', 'Admin\Servis::update', ['filter'=>'auth']);
 $routes->get('/admin/servis/delete/$1', 'Admin\Servis::delete', ['filter'=>'auth']);
 $routes->get('/admin/servis/updateStatus/$1/$2', 'Admin\Servis::updateStatus', ['filter'=>'auth']);
+$routes->post('/admin/servis/updateToSelesai/$1', 'Admin\Servis::updateToSelesai', ['filter'=>'auth']);
+$routes->post('/admin/servis/updateToDiambil/$1', 'Admin\Servis::updateToDiambil', ['filter'=>'auth']);
+$routes->get('/admin/servis/search', 'Admin\Servis::search', ['filter'=>'auth']);
+
+//User Route
+$routes->get('/admin/user', 'Admin\User::index',['filter'=>'auth']);
+$routes->post('/admin/user/add', 'Admin\User::add',['filter'=>'auth']);
+$routes->post('/admin/servis/edit/$1', 'Admin\Servis::edit', ['filter'=>'auth']);
+$routes->get('/admin/user/del/(:num)','Admin\User::delete/$1',["filter"=>"auth"]);
+$routes->get('/admin/user/search', 'Admin\User::search', ['filter'=>'auth']);
+
+// Profile Route
+$routes->get('/admin/profile','Admin\User::profile',["filter"=>"auth"]);
+$routes->post('/admin/profile/update','Admin\User::updateProfile',["filter"=>"auth"]);
+$routes->post('/admin/profile/changePass','Admin\User::changePassword',["filter"=>"auth"]);
 /**
  * --------------------------------------------------------------------
  * Additional Routing

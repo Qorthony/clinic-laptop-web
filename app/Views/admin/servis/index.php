@@ -14,9 +14,20 @@
         <div class="card-header">
             Action
         </div>
-        <div class="card-body">
-            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#tambah">Tambah servis</button>
-
+        <div class="card-body d-flex justify-content-between align-items-baseline">
+            <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#tambah">Tambah servis</button>
+            <form class="form-inline" action="/admin/servis/search" method="GET">
+                <label class="sr-only" for="cari">Cari</label>
+                <input type="text" name="keyword" required class="form-control mb-2 mr-sm-2" id="cari" placeholder="contoh : asus (seri laptop)">
+                <select required name="field" id="field" class="form-control mb-2 mr-sm-2">
+                    <option value="no_servis">No Servis</option>
+                    <option value="tgl_masuk">Tgl Masuk</option>
+                    <option value="jenis_kerusakan">Kerusakan</option>
+                    <option value="pemilik">Pemilik</option>
+                    <option value="seri_laptop">Seri Laptop</option>
+                </select>
+                <button type="submit" class="btn btn-primary mb-2">Cari</button>
+            </form>
             <!-- Modal Tambah Servis -->
             <div class="modal fade" id="tambah" tabindex="-1" aria-labelledby="tambahLabel" aria-hidden="true">
                 <div class="modal-dialog">
@@ -62,8 +73,13 @@
     </div>
 
     <div class="card">
-        <div class="card-header">
-            Daftar servis
+        <div class="card-header d-flex justify-content-between align-items-baseline">
+            <div>Daftar Servis</div>
+            <div>
+                <?php if (isset($_REQUEST['keyword'])) { ?>
+                    <a href="/admin/servis" class="btn btn-dark">Tampilkan Semua</a>
+                <?php } ?>
+            </div>
         </div>
         <div class="card-body">
             <ul class="nav nav-tabs" id="myTab" role="tablist">
@@ -74,10 +90,13 @@
                     <a class="nav-link" id="proses-tab" data-toggle="tab" href="#proses" role="tab" aria-controls="proses" aria-selected="false">Proses</a>
                 </li>
                 <li class="nav-item" role="presentation">
+                    <a class="nav-link" id="batal-tab" data-toggle="tab" href="#batal" role="tab" aria-controls="batal" aria-selected="false">Batal</a>
+                </li>
+                <li class="nav-item" role="presentation">
                     <a class="nav-link" id="selesai-tab" data-toggle="tab" href="#selesai" role="tab" aria-controls="selesai" aria-selected="false">Selesai</a>
                 </li>
                 <li class="nav-item" role="presentation">
-                    <a class="nav-link" id="diambil-tab" data-toggle="tab" href="#diambil" role="tab" aria-controls="diambil" aria-selected="false">diambil</a>
+                    <a class="nav-link" id="diambil-tab" data-toggle="tab" href="#diambil" role="tab" aria-controls="diambil" aria-selected="false">Diambil</a>
                 </li>
             </ul>
             <div class="tab-content" id="myTabContent">
@@ -112,14 +131,14 @@
                                             <td><?= $value['pemilik'] ?></td>
                                             <td>
                                                 <a href="/admin/servis/updateStatus/<?= $value["no_servis"] ?>/proses" class="btn btn-success">diproses -></a>
-                                                <button class="btn btn-light" data-toggle="modal" data-target="#editAkun<?= $value['no_servis'] ?>">Edit</button>
-                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusAkun<?= $value['no_servis'] ?>">Hapus</button>
+                                                <button class="btn btn-light" data-toggle="modal" data-target="#editServis<?= $value['no_servis'] ?>">Edit</button>
+                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusServis<?= $value['no_servis'] ?>">Hapus</button>
                                                 <!-- Modal Edit User-->
-                                                <div class="modal fade" id="editAkun<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="editAkunLabel" aria-hidden="true">
+                                                <div class="modal fade" id="editServis<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="editServisLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header d-flex">
-                                                                <h5 class="modal-title" id="editAkunLabel">Edit Data</h5>
+                                                                <h5 class="modal-title" id="editServisLabel">Edit Data</h5>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
@@ -162,11 +181,11 @@
                                                 </div>
                                                 <!-- End Modal Edit User -->
                                                 <!-- Modal Hapus User -->
-                                                <div class="modal fade" id="hapusAkun<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="hapusAkunLabel" aria-hidden="true">
+                                                <div class="modal fade" id="hapusServis<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="hapusServisLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header d-flex" style="background-color: rgba(46,94,153,0.65);">
-                                                                <h5 class="modal-title" id="hapusAkunLabel">Konfirmasi</h5>
+                                                                <h5 class="modal-title" id="hapusServisLabel">Konfirmasi</h5>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
@@ -220,16 +239,53 @@
                                             <td><?= $value['kelengkapan_unit'] ?></td>
                                             <td><?= $value['pemilik'] ?></td>
                                             <td>
-                                            <a href="/admin/servis/updateStatus/<?= $value["no_servis"] ?>/antrian" class="btn btn-success"><- antrian</a>
-                                            <a href="/admin/servis/updateStatus/<?= $value["no_servis"] ?>/selesai" class="btn btn-success">selesai -></a>
-                                                <button class="btn btn-light" data-toggle="modal" data-target="#editAkun<?= $value['no_servis'] ?>">Edit</button>
-                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusAkun<?= $value['no_servis'] ?>">Hapus</button>
-                                                <!-- Modal Edit User-->
-                                                <div class="modal fade" id="editAkun<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="editAkunLabel" aria-hidden="true">
+                                                <a href="/admin/servis/updateStatus/<?= $value["no_servis"] ?>/antrian" class="btn btn-warning">
+                                                    <-</a> <a href="/admin/servis/updateStatus/<?= $value["no_servis"] ?>/batal" class="btn btn-danger">
+                                                        X
+                                                </a>
+                                                <button class="btn btn-success" data-toggle="modal" data-target="#updateToSelesai<?= $value['no_servis'] ?>">-></button> <br />
+                                                <button class="btn btn-light" data-toggle="modal" data-target="#editServis<?= $value['no_servis'] ?>">Edit</button>
+                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusServis<?= $value['no_servis'] ?>">Hapus</button>
+                                                <!-- Modal update to selesai-->
+                                                <div class="modal fade" id="updateToSelesai<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="updateToSelesaiLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header d-flex">
-                                                                <h5 class="modal-title" id="editAkunLabel">Edit Data</h5>
+                                                                <h5 class="modal-title" id="updateToSelesaiLabel">Update Status</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <form action="/admin/servis/updateToSelesai/<?= $value["no_servis"] ?>" method="POST">
+                                                                <div class="modal-body">
+                                                                    <div class="form-group">
+                                                                        <label for="no_servis">No Servis</label>
+                                                                        <input required type="text" class="form-control" id="no_servis" disabled value="<?= $value["no_servis"] ?>">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="biaya">biaya</label>
+                                                                        <input required type="number" name="biaya" class="form-control" id="biaya">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="ket_perbaikan">Perbaikan</label>
+                                                                        <textarea class="form-control" name="ket_perbaikan" id="ket_perbaikan" cols="30" rows="5" required></textarea>
+                                                                    </div>
+                                                                </div>
+                                                                <div class="modal-footer">
+                                                                    <button type="submit" class="btn btn-success">Update</button>
+                                                                    <button type="button" class="btn btn-light" data-dismiss="modal">Keluar</button>
+                                                                </div>
+                                                            </form>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Modal update to selesai -->
+                                                <!-- Modal Edit Proses-->
+                                                <div class="modal fade" id="editServis<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="editServisLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header d-flex">
+                                                                <h5 class="modal-title" id="editServisLabel">Edit Data</h5>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
@@ -270,13 +326,74 @@
                                                         </div>
                                                     </div>
                                                 </div>
-                                                <!-- End Modal Edit User -->
+                                                <!-- End Modal Edit Proses -->
                                                 <!-- Modal Hapus User -->
-                                                <div class="modal fade" id="hapusAkun<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="hapusAkunLabel" aria-hidden="true">
+                                                <div class="modal fade" id="hapusServis<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="hapusServisLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header d-flex" style="background-color: rgba(46,94,153,0.65);">
-                                                                <h5 class="modal-title" id="hapusAkunLabel">Konfirmasi</h5>
+                                                                <h5 class="modal-title" id="hapusServisLabel">Konfirmasi</h5>
+                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                                                    <span aria-hidden="true">&times;</span>
+                                                                </button>
+                                                            </div>
+                                                            <div class="modal-body">
+                                                                <p class="text-body">Apakah anda yakin menghapus data ini?</p>
+                                                            </div>
+                                                            <div class="modal-footer">
+                                                                <a href="/admin/servis/delete/<?= $value["no_servis"] ?>" class="btn btn-danger">Hapus</a>
+                                                                <button type="button" class="btn btn-light" data-dismiss="modal">Tidak</button>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                                <!-- End Modal hapus user -->
+                                            </td>
+                                        </tr>
+                                    <?php }
+                                    ?>
+                                </tbody>
+                            <?php } ?>
+                    </table>
+                </div>
+                <div class="tab-pane fade" id="batal" role="tabpanel" aria-labelledby="batal-tab">
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">No Servis</th>
+                                <th scope="col">Tgl Masuk</th>
+                                <th scope="col">Kerusakan</th>
+                                <th scope="col">Seri Laptop</th>
+                                <th scope="col">Kelengkapan_unit</th>
+                                <th scope="col">Pemilik</th>
+                                <th scope="col">Action</th>
+                            </tr>
+                        </thead>
+                        <?php if (empty($batal)) { ?>
+                            <tr>
+                                <td colspan="8" class="text-center text-secondary">Maaf, Data belum tersedia!</td>
+                            <tr>
+                            <?php } else { ?>
+                                <tbody>
+                                    <?php foreach ($batal as $key => $value) { ?>
+                                        <tr>
+                                            <td><?= $key + 1 ?></td>
+                                            <td><?= $value['no_servis'] ?></td>
+                                            <td><?= $value['tgl_masuk'] ?></td>
+                                            <td><?= $value['jenis_kerusakan'] ?></td>
+                                            <td><?= $value['seri_laptop'] ?></td>
+                                            <td><?= $value['kelengkapan_unit'] ?></td>
+                                            <td><?= $value['pemilik'] ?></td>
+                                            <td>
+                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusBatal<?= $value['no_servis'] ?>">Hapus</button>
+
+                                                <!-- Modal Hapus User -->
+                                                <div class="modal fade" id="hapusBatal<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="hapusBatalLabel" aria-hidden="true">
+                                                    <div class="modal-dialog">
+                                                        <div class="modal-content">
+                                                            <div class="modal-header d-flex" style="background-color: rgba(46,94,153,0.65);">
+                                                                <h5 class="modal-title" id="hapusServisLabel">Konfirmasi</h5>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
@@ -305,12 +422,9 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">No Servis</th>
-                                <th scope="col">Tgl Masuk</th>
-                                <th scope="col">Kerusakan</th>
-                                <th scope="col">Seri Laptop</th>
-                                <th scope="col">Kelengkapan_unit</th>
-                                <th scope="col">Pemilik</th>
+                                <th scope="col" colspan="2">Keterangan Servis</th>
+                                <th scope="col" colspan="2">Keterangan Laptop</th>
+                                <th scope="col" colspan="2">Keterangan Perbaikan</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -322,22 +436,25 @@
                                 <tbody>
                                     <?php foreach ($selesai as $key => $value) { ?>
                                         <tr>
-                                            <td><?= $key + 1 ?></td>
-                                            <td><?= $value['no_servis'] ?></td>
-                                            <td><?= $value['tgl_masuk'] ?></td>
-                                            <td><?= $value['jenis_kerusakan'] ?></td>
-                                            <td><?= $value['seri_laptop'] ?></td>
-                                            <td><?= $value['kelengkapan_unit'] ?></td>
-                                            <td><?= $value['pemilik'] ?></td>
-                                            <td>
-                                                <button class="btn btn-light" data-toggle="modal" data-target="#editAkun<?= $value['no_servis'] ?>">Edit</button>
-                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusAkun<?= $value['no_servis'] ?>">Hapus</button>
+                                            <td rowspan="3"><?= $key + 1 ?></td>
+                                            <td>No Servis</td>
+                                            <td>: <?= $value['no_servis'] ?></td>
+                                            <td>Seri</td>
+                                            <td>: <?= $value['seri_laptop'] ?></td>
+                                            <td>Biaya</td>
+                                            <td>: <?= $value['biaya_servis'] ?></td>
+                                            <td rowspan="3">
+                                                <a href="/admin/servis/updateToDiambil/<?= $value["no_servis"] ?>" class="btn btn-warning">
+                                                    diambil ->
+                                                </a> <br />
+                                                <button class="btn btn-light" data-toggle="modal" data-target="#editServis<?= $value['no_servis'] ?>">Edit</button>
+                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusServis<?= $value['no_servis'] ?>">Hapus</button>
                                                 <!-- Modal Edit User-->
-                                                <div class="modal fade" id="editAkun<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="editAkunLabel" aria-hidden="true">
+                                                <div class="modal fade" id="editServis<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="editServisLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header d-flex">
-                                                                <h5 class="modal-title" id="editAkunLabel">Edit Data</h5>
+                                                                <h5 class="modal-title" id="editServisLabel">Edit Data</h5>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
@@ -368,6 +485,15 @@
                                                                         <label for="kelengkapan_unit">Kelengkapan Unit</label>
                                                                         <textarea class="form-control" name="kelengkapan_unit" id="kelengkapan_unit" cols="30" rows="5" placeholder="contoh : ram 4gb, harddisk 500gb"><?= $value["kelengkapan_unit"] ?></textarea>
                                                                     </div>
+                                                                    <div class="form-group">
+                                                                        <label for="biaya_servis">Biaya</label>
+                                                                        <input required type="number" name="biaya_servis" class="form-control" id="biaya_servis" value="<?= $value["biaya_servis"] ?>">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="ket_perbaikan">Perbaikan</label>
+                                                                        <textarea class="form-control" name="ket_perbaikan" id="ket_perbaikan" cols="30" rows="5" placeholder="contoh : ram 4gb, harddisk 500gb"><?= $value["ket_perbaikan"] ?></textarea>
+                                                                    </div>
+
 
                                                                 </div>
                                                                 <div class="modal-footer">
@@ -380,11 +506,11 @@
                                                 </div>
                                                 <!-- End Modal Edit User -->
                                                 <!-- Modal Hapus User -->
-                                                <div class="modal fade" id="hapusAkun<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="hapusAkunLabel" aria-hidden="true">
+                                                <div class="modal fade" id="hapusServis<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="hapusServisLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header d-flex" style="background-color: rgba(46,94,153,0.65);">
-                                                                <h5 class="modal-title" id="hapusAkunLabel">Konfirmasi</h5>
+                                                                <h5 class="modal-title" id="hapusServisLabel">Konfirmasi</h5>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
@@ -402,6 +528,23 @@
                                                 <!-- End Modal hapus user -->
                                             </td>
                                         </tr>
+                                        <tr>
+                                            <td>Tgl_masuk</td>
+                                            <td>: <?= $value['tgl_masuk'] ?></td>
+                                            <td>Kelengkapan Unit</td>
+                                            <td>: <?= $value['kelengkapan_unit'] ?></td>
+                                            <td>Perbaikan</td>
+                                            <td rowspan="2">: <?= $value['ket_perbaikan'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kerusakan</td>
+                                            <td>: <?= $value['jenis_kerusakan'] ?></td>
+                                            <td>Pemilik</td>
+                                            <td>: <?= $value['pemilik'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="bg-info" colspan="8"></td>
+                                        </tr>
                                     <?php }
                                     ?>
                                 </tbody>
@@ -413,12 +556,9 @@
                         <thead>
                             <tr>
                                 <th scope="col">#</th>
-                                <th scope="col">No Servis</th>
-                                <th scope="col">Tgl Masuk</th>
-                                <th scope="col">Kerusakan</th>
-                                <th scope="col">Seri Laptop</th>
-                                <th scope="col">Kelengkapan_unit</th>
-                                <th scope="col">Pemilik</th>
+                                <th scope="col" colspan="2">Keterangan Servis</th>
+                                <th scope="col" colspan="2">Keterangan Laptop</th>
+                                <th scope="col" colspan="2">Keterangan Perbaikan</th>
                                 <th scope="col">Action</th>
                             </tr>
                         </thead>
@@ -430,69 +570,22 @@
                                 <tbody>
                                     <?php foreach ($diambil as $key => $value) { ?>
                                         <tr>
-                                            <td><?= $key + 1 ?></td>
-                                            <td><?= $value['no_servis'] ?></td>
-                                            <td><?= $value['tgl_masuk'] ?></td>
-                                            <td><?= $value['jenis_kerusakan'] ?></td>
-                                            <td><?= $value['seri_laptop'] ?></td>
-                                            <td><?= $value['kelengkapan_unit'] ?></td>
-                                            <td><?= $value['pemilik'] ?></td>
-                                            <td>
-                                                <button class="btn btn-light" data-toggle="modal" data-target="#editAkun<?= $value['no_servis'] ?>">Edit</button>
-                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusAkun<?= $value['no_servis'] ?>">Hapus</button>
-                                                <!-- Modal Edit User-->
-                                                <div class="modal fade" id="editAkun<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="editAkunLabel" aria-hidden="true">
-                                                    <div class="modal-dialog">
-                                                        <div class="modal-content">
-                                                            <div class="modal-header d-flex">
-                                                                <h5 class="modal-title" id="editAkunLabel">Edit Data</h5>
-                                                                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                                                    <span aria-hidden="true">&times;</span>
-                                                                </button>
-                                                            </div>
-                                                            <form action="/admin/servis/update/<?= $value["no_servis"] ?>" method="POST">
-                                                                <div class="modal-body">
-                                                                    <div class="form-group">
-                                                                        <label for="no_servis">No Servis</label>
-                                                                        <input required type="text" class="form-control" id="no_servis" disabled value="<?= $value["no_servis"] ?>">
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label for="tgl_masuk">Tgl Masuk</label>
-                                                                        <input required type="date" name="tgl_masuk" class="form-control" id="tgl_masuk" value="<?= $value["tgl_masuk"] ?>">
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label for="jenis_kerusakan">Kerusakan</label>
-                                                                        <input required type="text" name="jenis_kerusakan" class="form-control" id="jenis_kerusakan" value="<?= $value["jenis_kerusakan"] ?>">
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label for="seri_laptop">Seri Laptop</label>
-                                                                        <input required type="text" name="seri_laptop" class="form-control" id="seri_laptop" value="<?= $value["seri_laptop"] ?>">
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label for="pemilik">Pemilik</label>
-                                                                        <input required type="text" name="pemilik" class="form-control" id="pemilik" value="<?= $value["pemilik"] ?>">
-                                                                    </div>
-                                                                    <div class="form-group">
-                                                                        <label for="kelengkapan_unit">Kelengkapan Unit</label>
-                                                                        <textarea class="form-control" name="kelengkapan_unit" id="kelengkapan_unit" cols="30" rows="5" placeholder="contoh : ram 4gb, harddisk 500gb"><?= $value["kelengkapan_unit"] ?></textarea>
-                                                                    </div>
+                                            <td rowspan="4"><?= $key + 1 ?></td>
+                                            <td>No Servis</td>
+                                            <td>: <?= $value['no_servis'] ?></td>
+                                            <td>Seri</td>
+                                            <td>: <?= $value['seri_laptop'] ?></td>
+                                            <td>Biaya</td>
+                                            <td>: <?= $value['biaya_servis'] ?></td>
+                                            <td rowspan="3">
+                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusServis<?= $value['no_servis'] ?>">Hapus</button>
 
-                                                                </div>
-                                                                <div class="modal-footer">
-                                                                    <button type="submit" class="btn btn-success">Ubah</button>
-                                                                    <button type="button" class="btn btn-light" data-dismiss="modal">Keluar</button>
-                                                                </div>
-                                                            </form>
-                                                        </div>
-                                                    </div>
-                                                </div>
-                                                <!-- End Modal Edit User -->
                                                 <!-- Modal Hapus User -->
-                                                <div class="modal fade" id="hapusAkun<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="hapusAkunLabel" aria-hidden="true">
+                                                <div class="modal fade" id="hapusServis<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="hapusServisLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
                                                             <div class="modal-header d-flex" style="background-color: rgba(46,94,153,0.65);">
-                                                                <h5 class="modal-title" id="hapusAkunLabel">Konfirmasi</h5>
+                                                                <h5 class="modal-title" id="hapusServisLabel">Konfirmasi</h5>
                                                                 <button type="button" class="close" data-dismiss="modal" aria-label="Close">
                                                                     <span aria-hidden="true">&times;</span>
                                                                 </button>
@@ -509,6 +602,23 @@
                                                 </div>
                                                 <!-- End Modal hapus user -->
                                             </td>
+                                        </tr>
+                                        <tr>
+                                            <td>Tgl_masuk</td>
+                                            <td>: <?= $value['tgl_masuk'] ?></td>
+                                            <td>Kelengkapan Unit</td>
+                                            <td>: <?= $value['kelengkapan_unit'] ?></td>
+                                            <td>Perbaikan</td>
+                                            <td rowspan="2">: <?= $value['ket_perbaikan'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Kerusakan</td>
+                                            <td>: <?= $value['jenis_kerusakan'] ?></td>
+                                            <td>Pemilik</td>
+                                            <td>: <?= $value['pemilik'] ?></td>
+                                        </tr>
+                                        <tr>
+                                            <td class="bg-dark text-white text-center font-weight-bold" colspan="7">Tanggal Diambil : <?= $value['tgl_diambil'] ?></td>
                                         </tr>
                                     <?php }
                                     ?>

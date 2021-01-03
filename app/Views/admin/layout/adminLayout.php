@@ -9,10 +9,10 @@
     <link rel="stylesheet" href="/css/app.css">
 </head>
 
-<body>
+<body class="bg-blue">
     <nav class="navbar navbar-expand-lg navbar-light bg-light">
         <a class="navbar-brand" href="/">
-            <h5>Clinic Laptop Jombang</h5>
+            <h5>Clinic Laptop</h5>
             <!-- <img class="img-fluid" width="200" src="/gambar/pertamini.png" alt="logo_pertaminiinaja"> -->
         </a>
         <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
@@ -27,7 +27,10 @@
                     <a class="nav-link" href="/admin/servis">Servis</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="/admin/profile">Profil</a>
+                    <a class="nav-link" href="/admin/user">User</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="/admin/profile">My Profil</a>
                 </li>
             </ul>
             <a class="btn btn-danger d-flex ml-auto" href="/logout">logout</a>

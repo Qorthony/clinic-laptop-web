@@ -11,7 +11,7 @@
         <div class="card-body">
             <h1 class="card-title">Selamat datang di Halaman Admin</h1>
             <p class="text-secondary">Silahkan pilih halaman yang ingin anda kunjungi</p>
-            <a href="/admin/produk" class="btn btn-primary">Pergi ke Halaman Atur Produk</a>
+            <a href="/admin/servis" class="btn btn-primary">Pergi ke Halaman Atur Servis</a>
             <a href="/admin/profile" class="btn btn-success">Pergi ke Halaman Profil Anda</a>
         </div>
         <div class="card-footer text-muted">
