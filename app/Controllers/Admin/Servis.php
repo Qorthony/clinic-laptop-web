@@ -182,7 +182,7 @@ class Servis extends BaseController
             'diambil'   => search_servis($field, $keyword,'diambil')
         ];
 
-        // dd($data); 
+        // dd(uri_string()); 
         return view('admin/servis/index', $data);
     }
 }

@@ -51,11 +51,11 @@ $routes->post('/admin/servis/updateToDiambil/$1', 'Admin\Servis::updateToDiambil
 $routes->get('/admin/servis/search', 'Admin\Servis::search', ['filter'=>'auth']);
 
 //User Route
-$routes->get('/admin/user', 'Admin\User::index',['filter'=>'auth']);
-$routes->post('/admin/user/add', 'Admin\User::add',['filter'=>'auth']);
-$routes->post('/admin/servis/edit/$1', 'Admin\Servis::edit', ['filter'=>'auth']);
-$routes->get('/admin/user/del/(:num)','Admin\User::delete/$1',["filter"=>"auth"]);
-$routes->get('/admin/user/search', 'Admin\User::search', ['filter'=>'auth']);
+$routes->get('/admin/user', 'Admin\User::index',['filter'=>'role:1']);
+$routes->post('/admin/user/add', 'Admin\User::add',['filter'=>'role:1']);
+$routes->post('/admin/servis/edit/$1', 'Admin\Servis::edit', ['filter'=>'role:1']);
+$routes->get('/admin/user/del/(:num)','Admin\User::delete/$1',["filter"=>"role:1"]);
+$routes->get('/admin/user/search', 'Admin\User::search', ['filter'=>'role:1']);
 
 // Profile Route
 $routes->get('/admin/profile','Admin\User::profile',["filter"=>"auth"]);

@@ -19,17 +19,23 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarNav">
+            <?php $uri = explode("/",uri_string());
+                  $key = array_key_last($uri);
+                  $hal = $uri[$key];
+             ?>
             <ul class="navbar-nav">
-                <li class="nav-item active">
-                    <a class="nav-link" href="/admin">Home <span class="sr-only">(current)</span></a>
+                <li class="nav-item <?= $hal=='admin'?'active':'' ?>">
+                    <a class="nav-link" href="/admin"> Home <span class="sr-only">(current)</span></a>
                 </li>
-                <li class="nav-item">
+                <li class="nav-item <?= $hal=='servis'?'active':'' ?>">
                     <a class="nav-link" href="/admin/servis">Servis</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="/admin/user">User</a>
-                </li>
-                <li class="nav-item">
+                <?php if ( session('user_role')==1 ) {?>
+                    <li class="nav-item <?= $hal=='user'?'active':'' ?>">
+                        <a class="nav-link" href="/admin/user">User</a>
+                    </li>
+                <?php } ?>
+                <li class="nav-item <?= $hal=='profile'?'active':'' ?>">
                     <a class="nav-link" href="/admin/profile">My Profil</a>
                 </li>
             </ul>
