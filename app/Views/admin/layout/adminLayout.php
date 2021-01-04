@@ -38,6 +38,11 @@
                 <li class="nav-item <?= $hal=='profile'?'active':'' ?>">
                     <a class="nav-link" href="/admin/profile">My Profil</a>
                 </li>
+                <?php if ( session('user_role')==1 ) {?>
+                    <li class="nav-item <?= $hal=='laporan'?'active':'' ?>">
+                        <a class="nav-link" href="/admin/laporan">Laporan</a>
+                    </li>
+                <?php } ?>
             </ul>
             <a class="btn btn-danger d-flex ml-auto" href="/logout">logout</a>
         </div>

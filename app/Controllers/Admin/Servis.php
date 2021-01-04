@@ -135,8 +135,8 @@ class Servis extends BaseController
     public function updateToSelesai($no_servis)
     {
         if (!$this->validate([
-            'biaya'                => "required|numeric",
-            'ket_perbaikan'      => 'required|alpha_numeric_space',
+            'biaya'                 => "required|numeric",
+            'ket_perbaikan'         => 'required',
         ])) {
             return redirect()->to('/admin/servis')->with('errors', $this->validator->getErrors());
         }

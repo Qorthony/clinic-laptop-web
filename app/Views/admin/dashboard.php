@@ -11,8 +11,48 @@
         <div class="card-body">
             <h1 class="card-title">Selamat datang di Halaman Admin</h1>
             <p class="text-secondary">Silahkan pilih halaman yang ingin anda kunjungi</p>
-            <a href="/admin/servis" class="btn btn-primary">Pergi ke Halaman Atur Servis</a>
-            <a href="/admin/profile" class="btn btn-success">Pergi ke Halaman Profil Anda</a>
+            <div class="row">
+                <div class="col-6 mb-4">
+                    <a href="/admin/servis" class="text-white" style="text-decoration: none;">
+                        <div class="card bg-info">
+                            <div class="card-body">
+                                <h1>Servis</h1>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-6 mb-4">
+                    <a href="/admin/user" class="text-white" style="text-decoration: none;">
+                        <div class="card bg-success">
+                            <div class="card-body">
+                                <h1>User</h1>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-6 mb-4">
+                    <a href="/admin/profile" class="text-white" style="text-decoration: none;">
+                        <div class="card bg-warning">
+                            <div class="card-body">
+                                <h1>My Profile</h1>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+
+                <div class="col-6 mb-4">
+                    <a href="/admin/laporan" class="text-white" style="text-decoration: none;">
+                        <div class="card bg-dark">
+                            <div class="card-body">
+                                <h1>Laporan</h1>
+                            </div>
+                        </div>
+                    </a>
+                </div>
+            </div>
+
         </div>
         <div class="card-footer text-muted">
             <a class="btn btn-danger" href="/logout">logout</a>

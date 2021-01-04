@@ -31,6 +31,7 @@ $routes->setAutoRoute(true);
 // We get a performance increase by specifying the default
 // route since we don't have to scan directories.
 $routes->get('/', 'Home::index');
+$routes->get('/cek', 'Home::cekStatus');
 
 // Auth Routes
 $routes->get('/login', 'Auth::index', ['filter'=>'guest']);
@@ -61,6 +62,9 @@ $routes->get('/admin/user/search', 'Admin\User::search', ['filter'=>'role:1']);
 $routes->get('/admin/profile','Admin\User::profile',["filter"=>"auth"]);
 $routes->post('/admin/profile/update','Admin\User::updateProfile',["filter"=>"auth"]);
 $routes->post('/admin/profile/changePass','Admin\User::changePassword',["filter"=>"auth"]);
+
+// Laporan Routes
+$routes->get('/admin/laporan', 'Admin\Laporan::index', ["filter"=>"role:1"]);
 /**
  * --------------------------------------------------------------------
  * Additional Routing
