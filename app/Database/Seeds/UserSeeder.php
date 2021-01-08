@@ -10,7 +10,6 @@ class UserSeeder extends \CodeIgniter\Database\Seeder
     {
         $data = [
             [
-                'id_user'       => 1,
                 'nama_user'     => 'admin',
                 'email'         => 'admin@admin.com',
                 'password'      => password_hash('ayoservis123', PASSWORD_DEFAULT) ,
@@ -19,7 +18,6 @@ class UserSeeder extends \CodeIgniter\Database\Seeder
                 'updated_at'    => Time::now()
             ],
             [
-                'id_user'       => 2,
                 'nama_user'     => 'toto',
                 'email'         => 'toto@toto.com',
                 'password'      => password_hash('ayoservis123', PASSWORD_DEFAULT),
