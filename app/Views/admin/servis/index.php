@@ -240,7 +240,7 @@
                                             <td><?= $value['pemilik'] ?></td>
                                             <td>
                                                 <a href="/admin/servis/updateStatus/<?= $value["no_servis"] ?>/antrian" class="btn btn-warning">
-                                                    <-< /a> <a href="/admin/servis/updateStatus/<?= $value["no_servis"] ?>/batal" class="btn btn-danger">
+                                                    <-</a> <a href="/admin/servis/updateStatus/<?= $value["no_servis"] ?>/batal" class="btn btn-danger">
                                                             X
                                                         </a>
                                                         <button class="btn btn-success" data-toggle="modal" data-target="#updateToSelesai<?= $value['no_servis'] ?>">-></button> <br />
@@ -469,19 +469,19 @@
                                                                         <table class="table">
                                                                             <tr>
                                                                                 <td>Pemilik</td>
-                                                                                <td>: Thony</td>
+                                                                                <td>: <?= $value['pemilik'] ?></td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td>Seri Laptop</td>
-                                                                                <td>: Lenovo</td>
+                                                                                <td>: <?= $value['seri_laptop'] ?></td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td>Perbaikan</td>
-                                                                                <td>: install ulang OS</td>
+                                                                                <td>: <?= $value['ket_perbaikan'] ?></td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td>Biaya</td>
-                                                                                <td>: Rp. 10000</td>
+                                                                                <td>: Rp. <?= $value['biaya_servis'] ?></td>
                                                                             </tr>
 
                                                                         </table>
