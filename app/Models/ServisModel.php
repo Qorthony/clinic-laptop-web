@@ -14,9 +14,12 @@ class ServisModel extends Model
     protected $allowedFields = [
         'no_servis', 
         'tgl_masuk',
+        'keluhan',
         'jenis_kerusakan',
         'pemilik',
-        'seri_laptop',
+        'kontak',
+        'tipe_laptop',
+        'serial_number',
         'kelengkapan_unit',
         'status_servis',
         'biaya_servis',

@@ -18,13 +18,14 @@
             <button type="button" class="btn btn-primary " data-toggle="modal" data-target="#tambah">Tambah servis</button>
             <form class="form-inline" action="/admin/servis/search" method="GET">
                 <label class="sr-only" for="cari">Cari</label>
-                <input type="text" name="keyword" required class="form-control mb-2 mr-sm-2" id="cari" placeholder="contoh : asus (seri laptop)">
+                <input type="text" name="keyword" required class="form-control mb-2 mr-sm-2" id="cari" placeholder="contoh : asus (Tipe Laptop)">
                 <select required name="field" id="field" class="form-control mb-2 mr-sm-2">
                     <option value="no_servis">No Servis</option>
                     <option value="tgl_masuk">Tgl Masuk</option>
                     <option value="jenis_kerusakan">Kerusakan</option>
                     <option value="pemilik">Pemilik</option>
-                    <option value="seri_laptop">Seri Laptop</option>
+                    <option value="tipe_laptop">Tipe Laptop</option>
+                    <option value="serial_number">Serial Number</option>
                 </select>
                 <button type="submit" class="btn btn-primary mb-2">Cari</button>
             </form>
@@ -45,6 +46,10 @@
                                     <input type="date" autofocus name="tgl_masuk" class="form-control" id="tgl_masuk" required value="<?= date('Y-m-d', strtotime("now")) ?>">
                                 </div>
                                 <div class="form-group">
+                                    <label for="keluhan">Keluhan</label>
+                                    <textarea class="form-control" name="keluhan" id="keluhan" cols="30" rows="5"></textarea>
+                                </div>
+                                <div class="form-group">
                                     <label for="jenis_kerusakan">Kerusakan</label>
                                     <input type="text" name="jenis_kerusakan" class="form-control" id="jenis_kerusakan" required placeholder="contoh : layar mati">
                                 </div>
@@ -53,8 +58,16 @@
                                     <input type="text" name="pemilik" class="form-control" id="pemilik" required placeholder="contoh : hahan">
                                 </div>
                                 <div class="form-group">
-                                    <label for="seri_laptop">Seri Laptop</label>
-                                    <input type="text" name="seri_laptop" class="form-control" id="seri_laptop" required placeholder="contoh : lenovo G40-45">
+                                    <label for="kontak">Kontak</label>
+                                    <input type="text" name="kontak" class="form-control" id="kontak" required placeholder="contoh : hahan">
+                                </div>
+                                <div class="form-group">
+                                    <label for="tipe_laptop">Tipe Laptop</label>
+                                    <input type="text" name="tipe_laptop" class="form-control" id="tipe_laptop" required placeholder="contoh : lenovo G40-45">
+                                </div>
+                                <div class="form-group">
+                                    <label for="serial_number">Serial Number</label>
+                                    <input type="text" name="serial_number" class="form-control" id="serial_number" required placeholder="contoh : lenovo G40-45">
                                 </div>
                                 <div class="form-group">
                                     <label for="kelengkapan_unit">Kelengkapan Unit</label>
@@ -108,8 +121,7 @@
                                 <th scope="col">No Servis</th>
                                 <th scope="col">Tgl Masuk</th>
                                 <th scope="col">Kerusakan</th>
-                                <th scope="col">Seri Laptop</th>
-                                <th scope="col">Kelengkapan_unit</th>
+                                <th scope="col">Tipe Laptop</th>
                                 <th scope="col">Pemilik</th>
                                 <th scope="col">Action</th>
                             </tr>
@@ -126,14 +138,13 @@
                                             <td><?= $value['no_servis'] ?></td>
                                             <td><?= $value['tgl_masuk'] ?></td>
                                             <td><?= $value['jenis_kerusakan'] ?></td>
-                                            <td><?= $value['seri_laptop'] ?></td>
-                                            <td><?= $value['kelengkapan_unit'] ?></td>
+                                            <td><?= $value['tipe_laptop'] ?></td>
                                             <td><?= $value['pemilik'] ?></td>
                                             <td>
-                                                <a href="/admin/servis/updateStatus/<?= $value["no_servis"] ?>/proses" class="btn btn-success">diproses -></a>
-                                                <button class="btn btn-light" data-toggle="modal" data-target="#editServis<?= $value['no_servis'] ?>">Edit</button>
-                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusServis<?= $value['no_servis'] ?>">Hapus</button>
-                                                <!-- Modal Edit User-->
+                                                <button class="btn btn-light" data-toggle="modal" data-target="#editServis<?= $value['no_servis'] ?>"> <img src="/images/icons/jam-icon/delete.svg" alt=""> </button>
+                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusServis<?= $value['no_servis'] ?>"><img src="/images/icons/jam-icon/pencil.svg" alt=""></button>
+                                                <a href="/admin/servis/updateStatus/<?= $value["no_servis"] ?>/proses" class="btn btn-success">diproses <img src="/images/icons/jam-icon/arrow-right.svg" alt=""></a>
+                                                <!-- Modal Edit Servis-->
                                                 <div class="modal fade" id="editServis<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="editServisLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
                                                         <div class="modal-content">
@@ -154,20 +165,32 @@
                                                                         <input required type="date" name="tgl_masuk" class="form-control" id="tgl_masuk" value="<?= $value["tgl_masuk"] ?>">
                                                                     </div>
                                                                     <div class="form-group">
+                                                                        <label for="keluhan">Keluhan</label>
+                                                                        <textarea required class="form-control" name="keluhan" id="keluhan" cols="30" rows="5"><?= $value["keluhan"] ?></textarea>
+                                                                    </div>
+                                                                    <div class="form-group">
                                                                         <label for="jenis_kerusakan">Kerusakan</label>
                                                                         <input required type="text" name="jenis_kerusakan" class="form-control" id="jenis_kerusakan" value="<?= $value["jenis_kerusakan"] ?>">
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label for="seri_laptop">Seri Laptop</label>
-                                                                        <input required type="text" name="seri_laptop" class="form-control" id="seri_laptop" value="<?= $value["seri_laptop"] ?>">
+                                                                        <label for="tipe_laptop">Tipe Laptop</label>
+                                                                        <input required type="text" name="tipe_laptop" class="form-control" id="tipe_laptop" value="<?= $value["tipe_laptop"] ?>">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="serial_number">Serial Number</label>
+                                                                        <input required type="text" name="serial_number" class="form-control" id="serial_number" value="<?= $value["serial_number"] ?>">
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="pemilik">Pemilik</label>
                                                                         <input required type="text" name="pemilik" class="form-control" id="pemilik" value="<?= $value["pemilik"] ?>">
                                                                     </div>
                                                                     <div class="form-group">
+                                                                        <label for="kontak">Kontak</label>
+                                                                        <input required type="text" name="kontak" class="form-control" id="kontak" value="<?= $value["kontak"] ?>">
+                                                                    </div>
+                                                                    <div class="form-group">
                                                                         <label for="kelengkapan_unit">Kelengkapan Unit</label>
-                                                                        <textarea class="form-control" name="kelengkapan_unit" id="kelengkapan_unit" cols="30" rows="5" placeholder="contoh : ram 4gb, harddisk 500gb"><?= $value["kelengkapan_unit"] ?></textarea>
+                                                                        <textarea required class="form-control" name="kelengkapan_unit" id="kelengkapan_unit" cols="30" rows="5" placeholder="contoh : ram 4gb, harddisk 500gb"><?= $value["kelengkapan_unit"] ?></textarea>
                                                                     </div>
 
                                                                 </div>
@@ -217,7 +240,7 @@
                                 <th scope="col">No Servis</th>
                                 <th scope="col">Tgl Masuk</th>
                                 <th scope="col">Kerusakan</th>
-                                <th scope="col">Seri Laptop</th>
+                                <th scope="col">Tipe Laptop</th>
                                 <th scope="col">Kelengkapan_unit</th>
                                 <th scope="col">Pemilik</th>
                                 <th scope="col">Action</th>
@@ -235,17 +258,19 @@
                                             <td><?= $value['no_servis'] ?></td>
                                             <td><?= $value['tgl_masuk'] ?></td>
                                             <td><?= $value['jenis_kerusakan'] ?></td>
-                                            <td><?= $value['seri_laptop'] ?></td>
+                                            <td><?= $value['tipe_laptop'] ?></td>
                                             <td><?= $value['kelengkapan_unit'] ?></td>
                                             <td><?= $value['pemilik'] ?></td>
                                             <td>
                                                 <a href="/admin/servis/updateStatus/<?= $value["no_servis"] ?>/antrian" class="btn btn-warning">
-                                                    <-</a> <a href="/admin/servis/updateStatus/<?= $value["no_servis"] ?>/batal" class="btn btn-danger">
-                                                            X
-                                                        </a>
-                                                        <button class="btn btn-success" data-toggle="modal" data-target="#updateToSelesai<?= $value['no_servis'] ?>">-></button> <br />
-                                                        <button class="btn btn-light" data-toggle="modal" data-target="#editServis<?= $value['no_servis'] ?>">Edit</button>
-                                                        <button class="btn btn-light" data-toggle="modal" data-target="#hapusServis<?= $value['no_servis'] ?>">Hapus</button>
+                                                    <img src="/images/icons/jam-icon/arrow-left.svg" alt="">
+                                                </a>
+                                                <a href="/admin/servis/updateStatus/<?= $value["no_servis"] ?>/batal" class="btn btn-danger">
+                                                    <img src="/images/icons/jam-icon/close-circle.svg" alt="">
+                                                </a>
+                                                        <button class="btn btn-success" data-toggle="modal" data-target="#updateToSelesai<?= $value['no_servis'] ?>"> <img src="/images/icons/jam-icon/arrow-right.svg" alt=""> </button> <br />
+                                                        <button class="btn btn-light" data-toggle="modal" data-target="#editServis<?= $value['no_servis'] ?>"> <img src="/images/icons/jam-icon/pencil.svg" alt=""></button>
+                                                        <button class="btn btn-light" data-toggle="modal" data-target="#hapusServis<?= $value['no_servis'] ?>"><img src="/images/icons/jam-icon/delete.svg" alt=""></button>
                                                         <!-- Modal update to selesai-->
                                                         <div class="modal fade" id="updateToSelesai<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="updateToSelesaiLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
@@ -280,7 +305,7 @@
                                                             </div>
                                                         </div>
                                                         <!-- End Modal update to selesai -->
-                                                        <!-- Modal Edit Proses-->
+                                                        <!-- Modal Edit Servis<proses>-->
                                                         <div class="modal fade" id="editServis<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="editServisLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
                                                                 <div class="modal-content">
@@ -301,20 +326,32 @@
                                                                                 <input required type="date" name="tgl_masuk" class="form-control" id="tgl_masuk" value="<?= $value["tgl_masuk"] ?>">
                                                                             </div>
                                                                             <div class="form-group">
+                                                                                <label for="keluhan">Keluhan</label>
+                                                                                <textarea required class="form-control" name="keluhan" id="keluhan" cols="30" rows="5"><?= $value["keluhan"] ?></textarea>
+                                                                            </div>
+                                                                            <div class="form-group">
                                                                                 <label for="jenis_kerusakan">Kerusakan</label>
                                                                                 <input required type="text" name="jenis_kerusakan" class="form-control" id="jenis_kerusakan" value="<?= $value["jenis_kerusakan"] ?>">
                                                                             </div>
                                                                             <div class="form-group">
-                                                                                <label for="seri_laptop">Seri Laptop</label>
-                                                                                <input required type="text" name="seri_laptop" class="form-control" id="seri_laptop" value="<?= $value["seri_laptop"] ?>">
+                                                                                <label for="tipe_laptop">Tipe Laptop</label>
+                                                                                <input required type="text" name="tipe_laptop" class="form-control" id="tipe_laptop" value="<?= $value["tipe_laptop"] ?>">
+                                                                            </div>
+                                                                            <div class="form-group">
+                                                                                <label for="serial_number">Serial Number</label>
+                                                                                <input required type="text" name="serial_number" class="form-control" id="serial_number" value="<?= $value["serial_number"] ?>">
                                                                             </div>
                                                                             <div class="form-group">
                                                                                 <label for="pemilik">Pemilik</label>
                                                                                 <input required type="text" name="pemilik" class="form-control" id="pemilik" value="<?= $value["pemilik"] ?>">
                                                                             </div>
                                                                             <div class="form-group">
+                                                                                <label for="kontak">Kontak</label>
+                                                                                <input required type="text" name="kontak" class="form-control" id="kontak" value="<?= $value["kontak"] ?>">
+                                                                            </div>
+                                                                            <div class="form-group">
                                                                                 <label for="kelengkapan_unit">Kelengkapan Unit</label>
-                                                                                <textarea class="form-control" name="kelengkapan_unit" id="kelengkapan_unit" cols="30" rows="5" placeholder="contoh : ram 4gb, harddisk 500gb"><?= $value["kelengkapan_unit"] ?></textarea>
+                                                                                <textarea required class="form-control" name="kelengkapan_unit" id="kelengkapan_unit" cols="30" rows="5" placeholder="contoh : ram 4gb, harddisk 500gb"><?= $value["kelengkapan_unit"] ?></textarea>
                                                                             </div>
 
                                                                         </div>
@@ -326,7 +363,7 @@
                                                                 </div>
                                                             </div>
                                                         </div>
-                                                        <!-- End Modal Edit Proses -->
+                                                        <!-- End Modal Edit servis<proses> -->
                                                         <!-- Modal Hapus User -->
                                                         <div class="modal fade" id="hapusServis<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="hapusServisLabel" aria-hidden="true">
                                                             <div class="modal-dialog">
@@ -364,7 +401,7 @@
                                 <th scope="col">No Servis</th>
                                 <th scope="col">Tgl Masuk</th>
                                 <th scope="col">Kerusakan</th>
-                                <th scope="col">Seri Laptop</th>
+                                <th scope="col">Tipe Laptop</th>
                                 <th scope="col">Kelengkapan_unit</th>
                                 <th scope="col">Pemilik</th>
                                 <th scope="col">Action</th>
@@ -382,11 +419,11 @@
                                             <td><?= $value['no_servis'] ?></td>
                                             <td><?= $value['tgl_masuk'] ?></td>
                                             <td><?= $value['jenis_kerusakan'] ?></td>
-                                            <td><?= $value['seri_laptop'] ?></td>
+                                            <td><?= $value['tipe_laptop'] ?></td>
                                             <td><?= $value['kelengkapan_unit'] ?></td>
                                             <td><?= $value['pemilik'] ?></td>
                                             <td>
-                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusBatal<?= $value['no_servis'] ?>">Hapus</button>
+                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusBatal<?= $value['no_servis'] ?>"><img src="/images/icons/jam-icon/delete.svg" alt=""></button>
 
                                                 <!-- Modal Hapus User -->
                                                 <div class="modal fade" id="hapusBatal<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="hapusBatalLabel" aria-hidden="true">
@@ -440,16 +477,16 @@
                                             <td>No Servis</td>
                                             <td>: <?= $value['no_servis'] ?></td>
                                             <td>Seri</td>
-                                            <td>: <?= $value['seri_laptop'] ?></td>
+                                            <td>: <?= $value['tipe_laptop'] ?></td>
                                             <td>Biaya</td>
                                             <td>: <?= $value['biaya_servis'] ?></td>
                                             <td rowspan="3">
+                                                <button class="btn btn-secondary" data-toggle="modal" data-target="#notaServis<?= $value['no_servis'] ?>"><img src="/images/icons/jam-icon/printer.svg" alt=""></button>
                                                 <a href="/admin/servis/updateToDiambil/<?= $value["no_servis"] ?>" class="btn btn-warning">
-                                                    diambil ->
-                                                </a> <br />
-                                                <button class="btn btn-secondary" data-toggle="modal" data-target="#notaServis<?= $value['no_servis'] ?>">Print Nota</button> <br>
-                                                <button class="btn btn-light" data-toggle="modal" data-target="#editServis<?= $value['no_servis'] ?>">Edit</button>
-                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusServis<?= $value['no_servis'] ?>">Hapus</button>
+                                                    <img src="/images/icons/jam-icon/arrow-right.svg" alt="">
+                                                </a> <br>
+                                                <button class="btn btn-light" data-toggle="modal" data-target="#editServis<?= $value['no_servis'] ?>"><img src="/images/icons/jam-icon/pencil.svg" alt=""></button>
+                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusServis<?= $value['no_servis'] ?>"><img src="/images/icons/jam-icon/delete.svg" alt=""></button>
                                                 <!-- Modal print nota -->
                                                 <div class="modal fade" id="notaServis<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="notaServisLabel" aria-hidden="true">
                                                     <div class="modal-dialog">
@@ -472,8 +509,8 @@
                                                                                 <td>: <?= $value['pemilik'] ?></td>
                                                                             </tr>
                                                                             <tr>
-                                                                                <td>Seri Laptop</td>
-                                                                                <td>: <?= $value['seri_laptop'] ?></td>
+                                                                                <td>Tipe Laptop</td>
+                                                                                <td>: <?= $value['tipe_laptop'] ?></td>
                                                                             </tr>
                                                                             <tr>
                                                                                 <td>Perbaikan</td>
@@ -516,20 +553,32 @@
                                                                         <input required type="date" name="tgl_masuk" class="form-control" id="tgl_masuk" value="<?= $value["tgl_masuk"] ?>">
                                                                     </div>
                                                                     <div class="form-group">
+                                                                        <label for="keluhan">Keluhan</label>
+                                                                        <textarea required class="form-control" name="keluhan" id="keluhan" cols="30" rows="5"><?= $value["keluhan"] ?></textarea>
+                                                                    </div>
+                                                                    <div class="form-group">
                                                                         <label for="jenis_kerusakan">Kerusakan</label>
                                                                         <input required type="text" name="jenis_kerusakan" class="form-control" id="jenis_kerusakan" value="<?= $value["jenis_kerusakan"] ?>">
                                                                     </div>
                                                                     <div class="form-group">
-                                                                        <label for="seri_laptop">Seri Laptop</label>
-                                                                        <input required type="text" name="seri_laptop" class="form-control" id="seri_laptop" value="<?= $value["seri_laptop"] ?>">
+                                                                        <label for="tipe_laptop">Tipe Laptop</label>
+                                                                        <input required type="text" name="tipe_laptop" class="form-control" id="tipe_laptop" value="<?= $value["tipe_laptop"] ?>">
+                                                                    </div>
+                                                                    <div class="form-group">
+                                                                        <label for="serial_number">Serial Number</label>
+                                                                        <input required type="text" name="serial_number" class="form-control" id="serial_number" value="<?= $value["serial_number"] ?>">
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="pemilik">Pemilik</label>
                                                                         <input required type="text" name="pemilik" class="form-control" id="pemilik" value="<?= $value["pemilik"] ?>">
                                                                     </div>
                                                                     <div class="form-group">
+                                                                        <label for="kontak">Kontak</label>
+                                                                        <input required type="text" name="kontak" class="form-control" id="kontak" value="<?= $value["kontak"] ?>">
+                                                                    </div>
+                                                                    <div class="form-group">
                                                                         <label for="kelengkapan_unit">Kelengkapan Unit</label>
-                                                                        <textarea class="form-control" name="kelengkapan_unit" id="kelengkapan_unit" cols="30" rows="5" placeholder="contoh : ram 4gb, harddisk 500gb"><?= $value["kelengkapan_unit"] ?></textarea>
+                                                                        <textarea required class="form-control" name="kelengkapan_unit" id="kelengkapan_unit" cols="30" rows="5" placeholder="contoh : ram 4gb, harddisk 500gb"><?= $value["kelengkapan_unit"] ?></textarea>
                                                                     </div>
                                                                     <div class="form-group">
                                                                         <label for="biaya_servis">Biaya</label>
@@ -620,11 +669,11 @@
                                             <td>No Servis</td>
                                             <td>: <?= $value['no_servis'] ?></td>
                                             <td>Seri</td>
-                                            <td>: <?= $value['seri_laptop'] ?></td>
+                                            <td>: <?= $value['tipe_laptop'] ?></td>
                                             <td>Biaya</td>
                                             <td>: <?= $value['biaya_servis'] ?></td>
                                             <td rowspan="3">
-                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusServis<?= $value['no_servis'] ?>">Hapus</button>
+                                                <button class="btn btn-light" data-toggle="modal" data-target="#hapusServis<?= $value['no_servis'] ?>"><img src="/images/icons/jam-icon/delete.svg" alt=""></button>
 
                                                 <!-- Modal Hapus User -->
                                                 <div class="modal fade" id="hapusServis<?= $value['no_servis'] ?>" tabindex="-1" aria-labelledby="hapusServisLabel" aria-hidden="true">

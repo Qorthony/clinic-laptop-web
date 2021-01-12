@@ -10,7 +10,7 @@ class ServisSeeder extends \CodeIgniter\Database\Seeder
     {
         $data = [
             [
-                'no_servis'         => strtotime('now') . '01',
+                'no_servis'         => uniqid("se"),
                 'tgl_masuk'         => '2020-12-9',
                 'keluhan'           => 'aduh, mati lagi layarnya',
                 'jenis_kerusakan'   => 'layar mati',
@@ -28,7 +28,7 @@ class ServisSeeder extends \CodeIgniter\Database\Seeder
                 'updated_at'        => Time::now()
             ],
             [
-                'no_servis'         => strtotime('now') . '02',
+                'no_servis'         => uniqid("se"),
                 'tgl_masuk'         => '2020-12-9',
                 'keluhan'           => 'aduh, blue screen lagi layarnya',
                 'jenis_kerusakan'   => 'blue screen',
@@ -46,7 +46,7 @@ class ServisSeeder extends \CodeIgniter\Database\Seeder
                 'updated_at'        => Time::now()
             ],
             [
-                'no_servis'         => strtotime('now') . '05',
+                'no_servis'         => uniqid("se"),
                 'tgl_masuk'         => '2020-12-10',
                 'keluhan'           => 'aduh, motherboardnya rusak',
                 'jenis_kerusakan'   => 'motherboard rusak',
@@ -64,7 +64,7 @@ class ServisSeeder extends \CodeIgniter\Database\Seeder
                 'updated_at'        => Time::now()
             ],
             [
-                'no_servis'         => strtotime('now') . '03',
+                'no_servis'         => uniqid("se"),
                 'tgl_masuk'         => '2020-12-10',
                 'keluhan'           => 'aduh, keyboardnnya error',
                 'jenis_kerusakan'   => 'keyboard error',
@@ -82,7 +82,7 @@ class ServisSeeder extends \CodeIgniter\Database\Seeder
                 'updated_at'        => Time::now()
             ],
             [
-                'no_servis'         => strtotime('now') . '04',
+                'no_servis'         => uniqid("se"),
                 'tgl_masuk'         => '2020-12-11',
                 'keluhan'           => 'aduh, kena virus dah',
                 'jenis_kerusakan'   => 'virus',
